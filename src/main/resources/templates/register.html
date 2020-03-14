@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원 가입</title>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+	<h1>회원 가입</h1>
+	<form action="#" th:action="@{/register}" method="post">
+		아이디: <input type="text" name="id"/><br>
+		비밀번호: <input type="text" name="password"/><br>
+		이메일: <input type="text" name="email"/>
+		<input type="button" value="인증번호전송" id="send"/><br>
+		인증번호: <input type="text" name="certification">
+		<input type="button" value="인증번호확인" id="check"/><br>
+		<input type="button" value="회원가입" id="submit" disabled="true"/>
+	</form>
+	
+	<script>
+		$('#submit').click(function(){
+			let data = {
+				id: $('input[name=id]').val(),
+				password: $('input[name=password]').val(),
+				email: $('input[name=email]').val()
+			};
+			$.post("/register", data, function(msg){
+				console.log(msg);
+			});
+		})
+	
+		$('#send').click(function(){
+			console.log($('input[name=email]').val());
+			$.get("/mail", {email: $('input[name=email]').val()},
+			function(){
+				alert("메일을 전송하였습니다");	
+			});
+		});
+		
+		$('#check').click(function(){
+			$.get("/mail/"+$('input[name=certification]').val(), function(result){
+				if(result) {
+					alert('인증번호가 일치합니다');
+					$('#submit').prop("disabled", false);
+				}
+				else alert('인증번호가 일치하지 않습니다');
+				console.log(result);
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Job Hunters</title>
+</head>
+<body>
+	<h1>Welcome To Job Hunters</h1>
+	<form action="#" th:action="@{/login}" method="post">
+		<input type="text" name="id"/>
+		<input type="password" name="password"/>
+		<input type="submit" value="로그인"/>
+	</form>
+	<a th:href="@{/register}">회원가입</a>
+</body>
+</html>
